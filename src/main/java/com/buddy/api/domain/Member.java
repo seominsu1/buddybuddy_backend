@@ -13,23 +13,19 @@ import java.time.LocalDateTime;
 public class Member {
 
     @Id
-    @Column(name = "member_id", nullable = false, unique = true)
+    @Column(unique = true)
     @NotNull
     private String memberId;
-
-    @Column(name = "password", nullable = false)
+    @NotNull
     private String password;
-
-    @Column(name = "nickname", nullable = false)
+    @NotNull
     private String nickname;
-
-    @Column(name = "email", nullable = false, unique = true)
+    @NotNull
+    @Column(unique = true)
     private String email;
-
-    @Column(name = "birthdate", nullable = false)
+    @NotNull
     private String birthdate;
 
-    @Column(name = "created")
     private String created;
 
     public Member() {
