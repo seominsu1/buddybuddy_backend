@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://buddybudd-db.cae195iepgm5.ap-northeast-2.rds.amazonaws.com:3306/buddybuddydb?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
     username: root
-    password: ${DB_PASSWORD}
+    password: tjalstn-9350
   jpa:
     database: mysql
     show-sql: true #hibernate가 실행한 모든 sql 출력
