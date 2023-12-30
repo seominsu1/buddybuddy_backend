@@ -23,19 +23,20 @@ public class MemberController implements MemberApiSpec{
     @Override
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberResponse> findById(@PathVariable String memberId) {
-        return ResponseEntity.ok(MemberResponse.of(memberService.findMember(memberId)));
+        return ResponseEntity.ok(MemberResponse.of(memberService.findMemberById(memberId)));
     }
 
     @Override
     @PostMapping
-    public ResponseEntity save(@RequestBody MemberRequest request) {
+    public ResponseEntity<MemberResponse> save(@RequestBody MemberRequest request) {
         return ResponseEntity.ok(MemberResponse.of(memberService.save(request.getMemberId(),
                 request.getPassword(),request.getNickname(),
                 request.getEmail(), request.getBirthdate())));
     }
 
     @Override
-    public ResponseEntity delete(MemberRequest request) {
-        return null;
+    public ResponseEntity delete(@RequestBody MemberRequest request) {
+        memberService.delete(request.getMemberId());
+        return ResponseEntity.noContent().build();
     }
 }

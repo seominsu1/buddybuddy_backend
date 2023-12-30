@@ -10,36 +10,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class MemberService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
-    public Member findMember(String memberId) {
-        checkIsValidMember(memberId);
-        return memberRepository.findById(memberId).get();
+    public Member findMemberById(String memberId) {
+        return findById(memberId);
     }
 
+    private Member findById(String memberId) {
+        return memberRepository.findById(memberId).orElseThrow(()-> new MemberNotFoundException(memberId));
+    }
     @Transactional
     public Member save(String memberId, String password, String nickname, String email, String birthdate) {
         checkDuplicatedMember(memberId);
         return saveMember(memberId, password, nickname, email, birthdate);
     }
-
-    private Member saveMember(String memberId, String password, String nickname, String email, String birthdate) {
-        return memberRepository.save(Member.of(memberId, password, nickname, email, birthdate));
-    }
-
     private void checkDuplicatedMember(String memberId) {
         if (memberRepository.existsById(memberId)) {
             throw new DuplicatedMemberException(memberId);
         }
     }
+    private Member saveMember(String memberId, String password, String nickname, String email, String birthdate) {
+        return memberRepository.save(Member.of(memberId, password, nickname, email, birthdate));
+    }
 
-    private void checkIsValidMember(String memberId) {
-        if (!memberRepository.existsById(memberId)) {
-            throw new MemberNotFoundException(memberId);
-        }
+    @Transactional
+    public void delete(String memberId) {
+        memberRepository.delete(findById(memberId));
     }
 }

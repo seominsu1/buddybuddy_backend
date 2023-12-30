@@ -1,6 +1,7 @@
 package com.buddy.api.service;
 
 import com.buddy.api.domain.Member;
+import com.buddy.api.exception.MemberNotFoundException;
 import com.buddy.api.repository.member.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Transactional
 @DataJpaTest
@@ -31,8 +33,19 @@ class MemberServiceTest {
         String memberId = "testId";
 
         MemberService memberService = new MemberService(memberRepository);
-        Member member = memberService.findMember(memberId);
+        Member member = memberService.findMemberById(memberId);
 
         assertThat(member.getMemberId()).isEqualTo(memberId);
+    }
+
+    @DisplayName("멤버 삭제")
+    @Test
+    void deleteMember() {
+        String memberId = "testId";
+
+        MemberService memberService = new MemberService(memberRepository);
+        memberService.delete(memberId);
+
+        assertThatThrownBy(()-> memberService.findMemberById(memberId)).isInstanceOf(MemberNotFoundException.class);
     }
 }
