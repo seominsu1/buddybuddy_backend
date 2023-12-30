@@ -35,6 +35,7 @@ public class MemberController implements MemberApiSpec{
     }
 
     @Override
+    @DeleteMapping
     public ResponseEntity delete(@RequestBody MemberRequest request) {
         memberService.delete(request.getMemberId());
         return ResponseEntity.noContent().build();
