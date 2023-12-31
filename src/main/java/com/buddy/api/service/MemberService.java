@@ -4,6 +4,9 @@ import com.buddy.api.domain.Member;
 import com.buddy.api.exception.DuplicatedMemberException;
 import com.buddy.api.exception.MemberNotFoundException;
 import com.buddy.api.repository.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public Member findMemberById(String memberId) {
@@ -26,7 +31,7 @@ public class MemberService {
     @Transactional
     public Member save(String memberId, String password, String nickname, String email, String birthdate) {
         checkDuplicatedMember(memberId);
-        return saveMember(memberId, password, nickname, email, birthdate);
+        return saveMember(memberId, passwordEncoder.encode(password), nickname, email, birthdate);
     }
     private void checkDuplicatedMember(String memberId) {
         if (memberRepository.existsById(memberId)) {

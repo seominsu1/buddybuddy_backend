@@ -25,8 +25,9 @@ public class Member {
     private String email;
     @NotNull
     private String birthdate;
-
     private String created;
+    @NotNull
+    private String role;
 
     public Member() {
     }
@@ -38,6 +39,7 @@ public class Member {
         this.email = email;
         this.birthdate = birthdate;
         this.created = created;
+        this.role = "USER";
     }
     public static Member of(String memberId, String password,String nickname, String email, String birthdate) {
         return new Member(memberId, password, nickname, email, birthdate, LocalDateTime.now().toString());
