@@ -40,4 +40,12 @@ public class MemberController implements MemberApiSpec{
         memberService.delete(request.getMemberId());
         return ResponseEntity.noContent().build();
     }
+
+    @Override
+    @PutMapping("/{memberId}")
+    public ResponseEntity update(@PathVariable String originMemberId, @RequestBody MemberRequest request) {
+        return ResponseEntity.ok(MemberResponse.of(memberService.update(originMemberId, request.getMemberId(),
+                request.getPassword(),request.getNickname(),
+                request.getEmail(), request.getBirthdate())));
+    }
 }

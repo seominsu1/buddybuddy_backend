@@ -11,4 +11,16 @@ public class MemberRequest {
     private String nickname;
     private String email;
     private String birthdate;
+
+    public MemberRequest(String memberId, String password, String nickname, String email, String birthdate) {
+        this.memberId = memberId;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.birthdate = birthdate;
+    }
+
+    public static MemberRequest of(String memberId, String password, String nickname, String email, String birthdate) {
+        return new MemberRequest(memberId, password, nickname, email, birthdate);
+    }
 }
