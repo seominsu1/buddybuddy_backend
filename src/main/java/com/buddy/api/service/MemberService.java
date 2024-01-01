@@ -26,18 +26,21 @@ public class MemberService {
     }
 
     private Member findById(String memberId) {
-        return memberRepository.findById(memberId).orElseThrow(()-> new MemberNotFoundException(memberId));
+        return memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(memberId));
     }
+
     @Transactional
     public Member save(String memberId, String password, String nickname, String email, String birthdate) {
         checkDuplicatedMember(memberId);
         return saveMember(memberId, passwordEncoder.encode(password), nickname, email, birthdate);
     }
+
     private void checkDuplicatedMember(String memberId) {
         if (memberRepository.existsById(memberId)) {
             throw new DuplicatedMemberException(memberId);
         }
     }
+
     private Member saveMember(String memberId, String password, String nickname, String email, String birthdate) {
         return memberRepository.save(Member.of(memberId, password, nickname, email, birthdate));
     }
@@ -45,5 +48,12 @@ public class MemberService {
     @Transactional
     public void delete(String memberId) {
         memberRepository.delete(findById(memberId));
+    }
+
+    @Transactional
+    public Member update(String originMemberId, String memberId, String password, String nickname, String email, String birthdate) {
+        Member findMember = memberRepository.findById(originMemberId).orElseThrow(() -> new MemberNotFoundException(memberId));
+        findMember.update(memberId, passwordEncoder.encode(password), nickname, email, birthdate);
+        return findMember;
     }
 }

@@ -1,5 +1,6 @@
 package com.buddy.api.service;
 
+import com.buddy.api.controller.member.request.MemberRequest;
 import com.buddy.api.domain.Member;
 import com.buddy.api.exception.MemberNotFoundException;
 import com.buddy.api.repository.member.MemberRepository;
@@ -47,5 +48,17 @@ class MemberServiceTest {
         memberService.delete(memberId);
 
         assertThatThrownBy(()-> memberService.findMemberById(memberId)).isInstanceOf(MemberNotFoundException.class);
+    }
+
+    @DisplayName("멤버 정보 수정")
+    @Test
+    void updateMember() {
+        String originId = "testId";
+        String originNickName = "test";
+        String expectedNickName = "changedName";
+        MemberService memberService = new MemberService(memberRepository);
+        assertThat(memberService.findMemberById(originId).getNickname()).isEqualTo(originNickName);
+        memberService.update(originId, "testId", "tstpwd","changedName","test@com","990109");
+        assertThat(memberService.findMemberById(originId).getNickname()).isEqualTo(expectedNickName);
     }
 }

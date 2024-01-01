@@ -17,4 +17,7 @@ public interface MemberApiSpec {
 
     @Operation(summary = "멤버 삭제", description = "멤버 삭제")
     ResponseEntity delete(MemberRequest request);
+
+    @Operation(summary = "멤버 정보 수정", description = "멤버 정보 수정")
+    ResponseEntity update(String originMemberId, MemberRequest request);
 }
