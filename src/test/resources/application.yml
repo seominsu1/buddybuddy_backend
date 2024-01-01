@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    initialization-mode: always
+    url: jdbc:h2:mem:tcp://localhost/~/test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
