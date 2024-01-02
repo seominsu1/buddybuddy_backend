@@ -53,7 +53,7 @@ public class MemberService {
     @Transactional
     public Member update(String originMemberId, String memberId, String password, String nickname, String email, String birthdate) {
         Member findMember = memberRepository.findById(originMemberId).orElseThrow(() -> new MemberNotFoundException(memberId));
-        findMember.update(memberId, passwordEncoder.encode(password), nickname, email, birthdate);
+        findMember.updateTo(memberId, passwordEncoder.encode(password), nickname, email, birthdate);
         return findMember;
     }
 }

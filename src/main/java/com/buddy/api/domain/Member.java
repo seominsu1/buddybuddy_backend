@@ -29,6 +29,9 @@ public class Member {
     @NotNull
     private String role;
 
+    @OneToOne(mappedBy = "member")
+    private Profile profile;
+
     public Member() {
     }
     @Builder
@@ -45,11 +48,15 @@ public class Member {
         return new Member(memberId, password, nickname, email, birthdate, LocalDateTime.now().toString());
     }
 
-    public void update(String memberId, String password,String nickname, String email, String birthdate) {
+    public void updateTo(String memberId, String password,String nickname, String email, String birthdate) {
         this.memberId = memberId;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
         this.birthdate = birthdate;
+    }
+
+    public void addProfile(Profile profile) {
+        this.profile = profile;
     }
 }
