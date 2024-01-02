@@ -43,7 +43,7 @@ public class MemberController implements MemberApiSpec{
 
     @Override
     @PutMapping("/{memberId}")
-    public ResponseEntity update(@PathVariable String originMemberId, @RequestBody MemberRequest request) {
+    public ResponseEntity<MemberResponse> update(@PathVariable String originMemberId, @RequestBody MemberRequest request) {
         return ResponseEntity.ok(MemberResponse.of(memberService.update(originMemberId, request.getMemberId(),
                 request.getPassword(),request.getNickname(),
                 request.getEmail(), request.getBirthdate())));
