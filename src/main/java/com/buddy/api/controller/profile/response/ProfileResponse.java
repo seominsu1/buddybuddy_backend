@@ -2,7 +2,6 @@ package com.buddy.api.controller.profile.response;
 
 import com.buddy.api.domain.Profile;
 import lombok.Getter;
-import org.springframework.security.core.parameters.P;
 
 @Getter
 public class ProfileResponse {

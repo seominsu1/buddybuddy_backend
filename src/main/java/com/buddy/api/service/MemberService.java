@@ -4,7 +4,6 @@ import com.buddy.api.domain.Member;
 import com.buddy.api.exception.DuplicatedMemberException;
 import com.buddy.api.exception.MemberNotFoundException;
 import com.buddy.api.repository.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
