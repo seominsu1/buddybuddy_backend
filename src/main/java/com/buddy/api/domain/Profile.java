@@ -12,9 +12,9 @@ public class Profile {
     @GeneratedValue
     private int id;
     @NotNull
-    private String gender;
-    @NotNull
     private String level;
+    @NotNull
+    private String gender;
     private String region;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -24,21 +24,21 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(String gender, String level, String region, Member member) {
-        this.gender = gender;
+    public Profile(String level, String gender, String region, Member member) {
         this.level = level;
+        this.gender = gender;
         this.region = region;
         this.member = member;
     }
-    public static Profile of(String gender, String level, String region, Member member) {
-        Profile profile = new Profile(gender, level, region, member);
+    public static Profile of(String level, String gender, String region, Member member) {
+        Profile profile = new Profile(level, gender, region, member);
         member.addProfile(profile);
         return profile;
     }
 
-    public void updateTo(String gender, String level, String region, Member member) {
-        this.gender = gender;
+    public void updateTo(String level, String gender, String region, Member member) {
         this.level = level;
+        this.gender = gender;
         this.region = region;
         this.member = member;
         member.addProfile(this);
