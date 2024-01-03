@@ -21,4 +21,10 @@ public class ProfileController implements ProfileApiSpec {
     public ResponseEntity<ProfileResponse> create(@PathVariable String memberId, @RequestBody ProfileRequest request) {
         return ResponseEntity.ok(ProfileResponse.of(profileService.create(memberId, request)));
     }
+
+    @Override
+    @PutMapping("/{memberId}")
+    public ResponseEntity<ProfileResponse> update(@PathVariable String memberId, @RequestBody ProfileRequest request) {
+        return ResponseEntity.ok(ProfileResponse.of(profileService.update(memberId, request)));
+    }
 }

@@ -21,6 +21,9 @@ public class Profile {
     @JoinColumn(name = "memberId", referencedColumnName = "memberId")
     private Member member;
 
+    public Profile() {
+    }
+
     public Profile(String gender, String level, String region, Member member) {
         this.gender = gender;
         this.level = level;
@@ -31,5 +34,13 @@ public class Profile {
         Profile profile = new Profile(gender, level, region, member);
         member.addProfile(profile);
         return profile;
+    }
+
+    public void updateTo(String gender, String level, String region, Member member) {
+        this.gender = gender;
+        this.level = level;
+        this.region = region;
+        this.member = member;
+        member.addProfile(this);
     }
 }

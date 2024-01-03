@@ -7,11 +7,13 @@ import com.buddy.api.exception.LicenseNotFoundException;
 import com.buddy.api.exception.MemberNotFoundException;
 import com.buddy.api.repository.member.MemberRepository;
 import com.buddy.api.repository.profile.ProfileRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 public class ProfileService {
 
     private ProfileRepository profileRepository;
@@ -32,5 +34,16 @@ public class ProfileService {
         if (!LicenseLevel.isExist(request.getLevel())) {
             throw new LicenseNotFoundException();
         }
+    }
+
+    @Transactional
+    public Profile update(String memberId, ProfileRequest request) {
+        validateProfile(request);
+        log.info("프로필 찾기 sql 시작");
+        Profile profile = profileRepository.findByMemberId(memberId);
+        log.info("프로필 찾기 sql 끝");
+        profile.updateTo(request.getLevel(),request.getGender(),request.getRegion(),
+                memberRepository.findById(memberId).orElseThrow(()-> new MemberNotFoundException(memberId)));
+        return profile;
     }
 }

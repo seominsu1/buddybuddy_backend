@@ -6,4 +6,5 @@ import org.springframework.http.ResponseEntity;
 public interface ProfileApiSpec {
 
     ResponseEntity create(String memberId, ProfileRequest request);
+    ResponseEntity update(String memberId, ProfileRequest request);
 }
