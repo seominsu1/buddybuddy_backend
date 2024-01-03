@@ -11,8 +11,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        ddl-auto: true
-        format-sql: true #sql 문 beautify
+        format-sql: true
   jwt:
     secret: ${JWT_KEY}
     token:
