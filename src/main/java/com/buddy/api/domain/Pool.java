@@ -17,6 +17,9 @@ public class Pool {
     private Boolean equipmentRent;
     @Column(columnDefinition = "GEOMETRY")
     private Point location;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Post post;
 
     public Pool() {
     }
