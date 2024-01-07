@@ -9,7 +9,7 @@ import lombok.Getter;
 public class Profile {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
     private String level;

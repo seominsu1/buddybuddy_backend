@@ -9,7 +9,7 @@ import org.springframework.security.core.parameters.P;
 @Getter
 public class Pool {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String region;

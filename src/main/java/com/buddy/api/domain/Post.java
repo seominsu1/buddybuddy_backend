@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Post {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId", referencedColumnName = "memberId")
