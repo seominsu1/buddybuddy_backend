@@ -11,6 +11,8 @@ import jakarta.el.MethodNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class PostService {
@@ -25,9 +27,14 @@ public class PostService {
         this.poolRepository = poolRepository;
     }
 
-    public Post create(String memberId, PostRequest request) {
+    public void create(String memberId, PostRequest request) {
         Member member = memberRepository.findById(memberId).orElseThrow(MethodNotFoundException::new);
         Pool pool = poolRepository.findByName(request.getPoolName());
-        return postRepository.save(Post.of(member, pool, request.getDate(), request.getBuddyLevel(), request.getContent(), request.getOpenTalkUrl()));
+        postRepository.save(Post.of(member, pool, request.getDate(), request.getBuddyLevel(), request.getContent(), request.getOpenTalkUrl()));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
 }

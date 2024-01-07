@@ -3,13 +3,14 @@ package com.buddy.api.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.locationtech.jts.geom.Point;
-import org.springframework.security.core.parameters.P;
+
 
 @Entity
 @Getter
 public class Pool {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "pool_id")
     private int id;
     private String name;
     private String region;
@@ -17,9 +18,7 @@ public class Pool {
     private Boolean equipmentRent;
     @Column(columnDefinition = "GEOMETRY")
     private Point location;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private Post post;
+
 
     public Pool() {
     }

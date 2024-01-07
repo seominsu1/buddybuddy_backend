@@ -2,7 +2,6 @@ package com.buddy.api.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -10,12 +9,14 @@ import java.time.LocalDateTime;
 @Getter
 public class Post {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "post_id")
+    private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId", referencedColumnName = "memberId")
     private Member member;
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pool_id", referencedColumnName = "pool_id")
     private Pool pool;
     private LocalDateTime date;
     private String buddyLevel;
