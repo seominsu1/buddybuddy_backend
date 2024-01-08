@@ -35,6 +35,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<Post> findAll() {
-        return postRepository.findAll();
+        return postRepository.findPostWithMemberAndPool();
+//        return postRepository.findAll();
     }
 }
