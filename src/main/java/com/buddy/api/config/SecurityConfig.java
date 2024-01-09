@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,9 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +28,15 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    private static final String[] PERMIT_URL = {
+            /*
+            swagger
+            * */
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/api/v1/login"
+    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -48,8 +52,10 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/swagger-ui.html","/api/v1/login"
+                                PERMIT_URL
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/post")
+                        .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/pool")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/member")
