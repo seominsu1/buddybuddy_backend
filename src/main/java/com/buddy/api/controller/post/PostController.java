@@ -44,7 +44,7 @@ public class PostController implements PostApiSpec{
     }
 
     @Override
-    public ResponseEntity update(@AuthenticationPrincipal User user, PostRequest request) {
+    public ResponseEntity<CommonResponse> update(@AuthenticationPrincipal User user, PostRequest request) {
         return null;
     }
 

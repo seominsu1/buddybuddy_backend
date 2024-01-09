@@ -34,6 +34,15 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    private static final String[] PERMIT_URL = {
+            /*
+            swagger
+            * */
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/v1/api/login"
+    };
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -48,7 +57,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/swagger-ui.html","/api/v1/login"
+                                PERMIT_URL
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/post")
                         .permitAll()
