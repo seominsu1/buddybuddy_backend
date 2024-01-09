@@ -51,6 +51,17 @@ public class PostController implements PostApiSpec{
         }
     }
 
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CommonResponse> delete(@PathVariable int id) {
+        try {
+            postService.delete(id);
+            return ResponseEntity.ok(CommonResponse.of(true, null));
+        } catch (Exception e) {
+            return ResponseEntity.ok(CommonResponse.of(false, e.getMessage()));
+        }
+    }
+
     private PostsResponse postResponses(List<Post> posts) {
         return PostsResponse.of(posts.stream()
                 .map(PostResponse::of)

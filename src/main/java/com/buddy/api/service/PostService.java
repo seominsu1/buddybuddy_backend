@@ -39,9 +39,15 @@ public class PostService {
         return postRepository.findPostWithMemberAndPool();
     }
 
-    public void update(int postId, PostRequest request) {
-        Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+    public void update(int id, PostRequest request) {
+        Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
         Pool pool = poolRepository.findByName(request.getPoolName());
         post.updateTo(pool, request);
+    }
+
+    public void delete(int id) {
+        Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+        post.updateTo(null,new PostRequest(null,null,null,null,null));
+        postRepository.deleteById(id);
     }
 }
