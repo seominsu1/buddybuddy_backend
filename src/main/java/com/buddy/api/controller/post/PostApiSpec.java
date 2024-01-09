@@ -9,5 +9,5 @@ public interface PostApiSpec {
 
     ResponseEntity findAll();
     ResponseEntity create(User user, PostRequest request);
-    ResponseEntity update(User user, PostRequest request);
+    ResponseEntity update(int postId, PostRequest request);
 }

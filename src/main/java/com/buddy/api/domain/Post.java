@@ -1,5 +1,6 @@
 package com.buddy.api.domain;
 
+import com.buddy.api.controller.post.request.PostRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -41,5 +42,13 @@ public class Post {
 
     public static Post of(Member member,Pool pool, LocalDateTime date, String buddyLevel, String content, String openTalkUrl) {
         return new Post(member, pool, date, buddyLevel, content, openTalkUrl);
+    }
+
+    public void updateTo(Pool pool, PostRequest request) {
+        this.pool = pool;
+        this.date = request.getDate();
+        this.buddyLevel = request.getBuddyLevel();
+        this.content = request.getContent();
+        this.openTalkUrl = request.getOpenTalkUrl();
     }
 }

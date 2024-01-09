@@ -4,6 +4,7 @@ import com.buddy.api.controller.post.request.PostRequest;
 import com.buddy.api.domain.Member;
 import com.buddy.api.domain.Pool;
 import com.buddy.api.domain.Post;
+import com.buddy.api.exception.PostNotFoundException;
 import com.buddy.api.repository.member.MemberRepository;
 import com.buddy.api.repository.pool.PoolRepository;
 import com.buddy.api.repository.post.PostRepository;
@@ -36,6 +37,11 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<Post> findAll() {
         return postRepository.findPostWithMemberAndPool();
-//        return postRepository.findAll();
+    }
+
+    public void update(int postId, PostRequest request) {
+        Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+        Pool pool = poolRepository.findByName(request.getPoolName());
+        post.updateTo(pool, request);
     }
 }
