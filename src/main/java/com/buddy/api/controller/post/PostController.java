@@ -6,6 +6,8 @@ import com.buddy.api.controller.post.response.PostResponse;
 import com.buddy.api.controller.post.response.PostsResponse;
 import com.buddy.api.domain.Post;
 import com.buddy.api.service.PostService;
+import com.buddy.api.service.dto.PostDto;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -60,6 +62,12 @@ public class PostController implements PostApiSpec{
         } catch (Exception e) {
             return ResponseEntity.ok(CommonResponse.of(false, e.getMessage()));
         }
+    }
+
+    @Override
+    @GetMapping("/paging")
+    public ResponseEntity<Page<PostDto>> findAllByPaging(@RequestParam("page") int page) {
+        return ResponseEntity.ok(postService.findAllByPaging(page));
     }
 
     private PostsResponse postResponses(List<Post> posts) {
