@@ -10,4 +10,8 @@ public interface PostApiSpec {
     ResponseEntity create(User user, PostRequest request);
     ResponseEntity update(int postId, PostRequest request);
     ResponseEntity delete(int postId);
+    ResponseEntity findAllByPaging(int page);
+    ResponseEntity findByCategory(int page, String gender, String region, int depth, String buddyLevel);
+
+
 }

@@ -8,11 +8,16 @@ import com.buddy.api.exception.PostNotFoundException;
 import com.buddy.api.repository.member.MemberRepository;
 import com.buddy.api.repository.pool.PoolRepository;
 import com.buddy.api.repository.post.PostRepository;
+import com.buddy.api.service.dto.PostDto;
 import jakarta.el.MethodNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -49,5 +54,20 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
         post.updateTo(null,new PostRequest(null,null,null,null,null));
         postRepository.deleteById(id);
+    }
+    @Transactional(readOnly = true)
+    public Page<PostDto> findAllByPaging(int page) {
+        PageRequest pageRequest = PageRequest.of(page,9, Sort.by("postDate").descending());
+        Page<Post> findPost = postRepository.findPostAll(pageRequest);
+        return findPost.map(PostDto::of);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostDto> findByCategories(int page, String gender, String region, int depth, String buddyLevel) {
+        PageRequest pageRequest = PageRequest.of(page,9, Sort.by("postDate").descending());
+        List<Post> findPost = postRepository.findPostByCategory(gender, region, depth, buddyLevel, pageRequest);
+        return findPost.stream()
+                .map(PostDto::of)
+                .collect(Collectors.toList());
     }
 }
