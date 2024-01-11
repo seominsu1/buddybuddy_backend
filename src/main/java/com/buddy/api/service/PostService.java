@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -59,5 +60,14 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(page,9, Sort.by("postDate").descending());
         Page<Post> findPost = postRepository.findPostAll(pageRequest);
         return findPost.map(PostDto::of);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostDto> findByCategories(int page, String gender, String region, int depth, String buddyLevel) {
+        PageRequest pageRequest = PageRequest.of(page,9, Sort.by("postDate").descending());
+        List<Post> findPost = postRepository.findPostByCategory(gender, region, depth, buddyLevel, pageRequest);
+        return findPost.stream()
+                .map(PostDto::of)
+                .collect(Collectors.toList());
     }
 }
