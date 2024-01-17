@@ -35,7 +35,21 @@ public class SecurityConfig {
             * */
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/api/v1/login"
+            /*
+            * service
+            * */
+            "/api/v1/login",
+            "/index.html",
+            "/app.js",
+            "/bootstrap.min.css",
+            "jquery.min.js",
+            "sockjs.min.js",
+            "stomp.min.js",
+            "/ws-stomp/**",
+            "/posts.html",
+            "/post.js",
+            "/api/v1/render/**",
+            "/auctionDetail.html"
     };
 
     @Bean

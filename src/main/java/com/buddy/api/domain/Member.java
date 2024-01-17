@@ -34,6 +34,8 @@ public class Member {
     private Profile profile;
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> post;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Auction> auction;
 
     public Member() {
     }
