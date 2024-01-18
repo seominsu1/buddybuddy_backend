@@ -1,5 +1,7 @@
 package com.buddy.api.auction.controller;
 
+import org.apache.catalina.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RenderController {
 
     @GetMapping("/{id}")
-    public String getAuctionPage(@PathVariable int id, Model model) {
+    public String getAuctionPage(@PathVariable int id, Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("auctionId", id);
-        model.addAttribute("masterName", "tester");
+        model.addAttribute("masterName", "user.getName()");
         return "auction/auctionDetail";
     }
 }

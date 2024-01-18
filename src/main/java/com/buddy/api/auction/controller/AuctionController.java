@@ -6,10 +6,7 @@ import com.buddy.api.auction.response.AuctionResponse;
 import com.buddy.api.auction.response.AuctionsResponse;
 import com.buddy.api.auction.service.AuctionService;
 import com.buddy.api.controller.common.CommonResponse;
-import com.buddy.api.controller.post.response.PostResponse;
-import com.buddy.api.controller.post.response.PostsResponse;
 import com.buddy.api.domain.Auction;
-import com.buddy.api.domain.Post;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -35,9 +32,11 @@ public class AuctionController {
 
     @MessageMapping("/{auctionId}") // 여기로 전송되면 메소드 호출
     @SendTo("/auctionRoom/{auctionId}")
-    public Greeting greeting(@DestinationVariable int auctionId, HelloMessage message) throws Exception {
+    public BidResponse greeting(@DestinationVariable int auctionId, BidMessage message) throws Exception {
         Thread.sleep(500); // simulated delay
-        return new Greeting(HtmlUtils.htmlEscape(message.getMasterName()) + "의 입찰가는 " + HtmlUtils.htmlEscape(message.getPrice()) + "!");
+        //받은 경매가 이벤트 처리
+        String resultMessage = auctionService.bidAuction(auctionId, HtmlUtils.htmlEscape(message.getMasterName()), HtmlUtils.htmlEscape(message.getPrice()));
+        return new BidResponse(resultMessage);
     }
 
     @PostMapping("/api/v1/auction")

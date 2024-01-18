@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HelloMessage {
+public class BidMessage {
     private String masterName;
     private String price;
 }
