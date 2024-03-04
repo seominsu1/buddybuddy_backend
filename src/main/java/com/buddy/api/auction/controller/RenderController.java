@@ -15,7 +15,7 @@ public class RenderController {
     @GetMapping("/{id}")
     public String getAuctionPage(@PathVariable int id, Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("auctionId", id);
-        model.addAttribute("masterName", "user.getName()");
+        model.addAttribute("masterName", user.getName());
         return "auction/auctionDetail";
     }
 }
